@@ -1,0 +1,175 @@
+type DstIp{
+          attackDstIp:ID!
+          isBackdoor30d:Int
+          isLoophole30d:Int
+          attackedIpsNumber:Int
+          attackedLoopholesTimes:Int
+          attackedXss:Int
+          attackedCommand:Int
+          attackedSqlInjection:Int
+          webshellNumber:Int
+          attackedWebshellNumber:Int
+          isAttackedSuccess30d:Int
+          otherAttackedTimes:Int
+          attackedFrequency:Float
+          attackedTimes:Int
+          isOnlyScaned30d:Int
+          isBackdoor24h:Int
+          isLoophole24h:Int
+          isAttackedSuccess24h:Int
+          isOnlyScaned24h:Int
+          updateTime:DateTime
+          attackedFrequency7d:Float
+          createTime:DateTime
+}
+type MaterialInfo{
+         materialDomain:ID!
+         attackSrcIp:String
+         attackDstIp:String
+         materialIp:String
+         isNestedMaterial:Int
+         materialTimes:Int
+         attackIpNumber:Int
+         nestedMaterials:String
+         createDate:DateTime
+         updateDate:DateTime
+         domianStatus:String
+         materialRegistrantPerson:String
+         materialRegistrantEmail:String
+}
+
+type SrcIp{
+          attackSrcIp :ID!
+          attackOs :String
+          tools :String
+          isOnlyScan:Int
+          attackFrequency:Float
+          attackTimes:Int
+          attackType:String
+          isAttackSuccess30d:Int
+          isSimulate30d:Int
+          isMaterial30d:Int
+          mostAttackType:String
+          isAttackSuccess24h:Int
+          isSimulate24h:Int
+          isMaterial24h:Int
+          updateTime:DateTime
+          attackedFrequency7d:Float
+          createTime:DateTime
+          srcIpStdsEvents:[StdsEvent]
+          srcIpEventsCount:Long
+}
+
+type WebShell{
+      baseurl:ID!
+      backdoorTimes:Int
+      backdoorPassword:String
+      attackSrcIp:String
+      attackIps:String
+      attackIpsNumber:Int
+      updateTime:DateTime
+      backdoorUrl:String
+}
+type Host{
+          uuid:ID!
+          name:String
+          assetId:String
+          groupId:String
+          msg:String
+          ip:String
+          type:Int
+          value:Int
+          mac:String
+          os:String
+          source:String
+          score:Int
+          scoreInc:Int
+          isTrusted:Int
+          status:Int
+          createTime:DateTime
+          updateTime:DateTime
+}
+type StdsEvent{
+      facility:String
+      host:String
+      id:ID!
+      port:String
+      collectip:String
+      severity:String
+      timestamp:String
+      type:String
+      valid:String
+      version:String
+      stds_ingest_valid_processing_dttm:String
+      shost:String
+      srcip:String
+      dstip:String
+      method:String
+      uri:String
+      baseurl:String
+      version_:String
+      host_:String
+      useragent:String
+      referer:String
+      reqbodypath:String
+      resbodypath:String
+      reqheaders:String
+      ruleid:String
+      ruletype:String
+      category:String
+      rulename:String
+      fingerprint:String
+      srclocation:String
+      dstlocation:String
+      srccountry:String
+      dstcountry:String
+      os:String
+      browser:String
+      attack_tags:String
+      cleaning_tags:String
+      nova_schema:String
+      nova_table:String
+      receivetime:Long
+      ctime:Long
+      logtime:Long
+      srcport:Long
+      dstport:Long
+      status:Long
+      rulelevel:Long
+      subcategory:Long
+      ssubcategory:Long
+      detstatus:Long
+      killchaintype:Long
+      srclatitude:Long
+      srclongitude:Long
+      dstlatitude:Long
+      dstlongitude:Long
+      srcintranet:Long
+      dstintranet:Long
+      isstepping:Long
+      srcIpObject:SrcIp
+      dstIpObject:DstIp
+      webShellObject:WebShell
+}
+
+type Query {
+    	 getSrcIpByIp(id:ID!):SrcIp
+    	 getDstIpByIp(id:ID!):DstIp
+    	 getWebShellByDomain(id:ID!):WebShell
+    	 getMaterialInfoByUrl(id:ID!):MaterialInfo
+    	 getHostByIp(id:ID!):Host
+    	 stdsEventById(id:ID!):StdsEvent
+    	 getAllSrcIps:[SrcIp]
+    	 getAllDstIps:[DstIp]
+    	 getAllHosts:[Host]
+    	 getAllWebShells:[WebShell]
+    	 getAllMaterialInfos:[MaterialInfo]
+    	 getAllStdsEvents:[StdsEvent]
+}
+
+
+schema {
+    query: Query
+}
+
+scalar DateTime

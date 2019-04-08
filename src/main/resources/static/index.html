@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="content">
+    aa
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</body>
+<script>
+    var graphqlRequst ={
+        operationName:null,
+        query:null,
+        variables:null
+    };
+    var query = "{\n" +
+        "        querySrcIp{\n" +
+        "            getSrcIpByIp(id:\"1.160.31.40\"){\n" +
+        "                attackSrcIp,\n" +
+        "                    attackFrequency\n" +
+        "            }\n" +
+        "        }\n" +
+        "    }";
+    graphqlRequst.query=query;
+    $.ajax({
+        url: "/graphql",
+        type: 'post',
+        data:JSON.stringify(graphqlRequst),
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (result) {
+          $("#content").html(JSON.stringify(result));
+        },
+        error: function (result) {
+        }
+    });
+</script>
+</html>
