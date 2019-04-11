@@ -11,6 +11,15 @@ input GraphQlPageInput{
       direction:String
 }
 
+type ConditionPojo{
+    type:String
+    condition:String
+}
+
+input ConditionInput{
+    type:String
+    condition:String
+}
 
 type DstIp{
           attackDstIp:ID!
@@ -35,6 +44,9 @@ type DstIp{
           updateTime:DateTime
           attackedFrequency7d:Float
           createTime:DateTime
+          hostInfo:Host
+          dstIpStdsEvents(lcs:[ConditionInput]):[StdsEvent]
+          dstIpEventsCount(lcs:[ConditionInput]):Long
 }
 
 type MaterialInfo{
@@ -71,8 +83,8 @@ type SrcIp{
           updateTime:DateTime
           attackedFrequency7d:Float
           createTime:DateTime
-          srcIpStdsEvents:[StdsEvent]
-          srcIpEventsCount:Long
+          srcIpStdsEvents(lcs:[ConditionInput]):[StdsEvent]
+          srcIpEventsCount(lcs:[ConditionInput]):Long
 }
 
 type WebShell{
@@ -84,6 +96,8 @@ type WebShell{
       attackIpsNumber:Int
       updateTime:DateTime
       backdoorUrl:String
+      webShellStdsEvents(lcs:[ConditionInput]):[StdsEvent]
+      webShellEventsCount(lcs:[ConditionInput]):Long
 }
 
 type Host{
@@ -166,46 +180,35 @@ type StdsEvent{
       srcIpObject:SrcIp
       dstIpObject:DstIp
       webShellObject:WebShell
-      materialInfoObject:MaterialInfo
 }
 
 type QuerySrcIp{
-  getSrcIpByKeyword(key:String,page:GraphQlPageInput):[SrcIp]
-  getSrcIpByIp(id:ID!):SrcIp
-  getAllSrcIps(page:GraphQlPageInput):[SrcIp]
+  srcIp(id:ID!):SrcIp
+  srcIps(lcs:[ConditionInput],page:GraphQlPageInput):[SrcIp]
 }
 type QueryDstIp{
-  getDstIpByIp(id:ID!):DstIp
-  getDstIpByKeyword(key:String,page:GraphQlPageInput):[DstIp]
-  getAllDstIps(page:GraphQlPageInput):[DstIp]
+  dstIp(id:ID!):DstIp
+  dstIps(lcs:[ConditionInput],page:GraphQlPageInput):[DstIp]
 }
 type QueryWebShell{
-     getWebShellByDomain(id:ID!):WebShell
-     getWebShellByKeyword(key:String,page:GraphQlPageInput):[WebShell]
-     getAllWebShells(page:GraphQlPageInput):[WebShell]
+     webShell(id:ID!):WebShell
+     webShells(lcs:[ConditionInput],page:GraphQlPageInput):[WebShell]
 }
 type QueryMaterialInfo{
-     getMaterialInfoByUrl(url:String!):MaterialInfo
-     getAllMaterialInfos(page:GraphQlPageInput):[MaterialInfo]
-     getMaterialInfoByKeyword(key:String,page:GraphQlPageInput):[MaterialInfo]
+     materialInfo(url:String!):MaterialInfo
+     materialInfos(lcs:[ConditionInput],page:GraphQlPageInput):[MaterialInfo]
 }
 
 type QueryStdsEvent{
-     stdsEventById(id:ID!):StdsEvent
-     getAllStdsEvents(page:GraphQlPageInput):[StdsEvent]
+     stdsEvent(id:ID!):StdsEvent
+     stdsEvents(lcs:[ConditionInput],page:GraphQlPageInput):[StdsEvent]
 }
 
-
-type QueryHost{
-      getHostByIp(ip:String!):Host
-      getAllHosts(page:GraphQlPageInput):[Host]
-}
 type Query{
      querySrcIp:QuerySrcIp
      queryDstIp:QueryDstIp
      queryStdsEvent:QueryStdsEvent
      queryMaterialInfo:QueryMaterialInfo
-     queryHost:QueryHost
  }
 schema {
     query:Query

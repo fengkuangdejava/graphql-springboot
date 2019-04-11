@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = {ElasticsearchDataAutoConfiguration.class})
-@PropertySource(value = {"classpath:application.properties","classpath:datasource.properties"})
+@PropertySource(value = {"classpath:application.properties", "classpath:datasource.properties"})
 public class GraphqlApplication extends SpringBootServletInitializer {
 
     @Override

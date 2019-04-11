@@ -1,3 +1,17 @@
+type GraphQlPage{
+    page:Int
+    size:Int
+    sort:String
+    direction:String
+}
+input GraphQlPageInput{
+      page:Int
+      size:Int
+      sort:String
+      direction:String
+}
+
+
 type DstIp{
           attackDstIp:ID!
           isBackdoor30d:Int
@@ -22,6 +36,7 @@ type DstIp{
           attackedFrequency7d:Float
           createTime:DateTime
 }
+
 type MaterialInfo{
          materialDomain:ID!
          attackSrcIp:String
@@ -70,6 +85,7 @@ type WebShell{
       updateTime:DateTime
       backdoorUrl:String
 }
+
 type Host{
           uuid:ID!
           name:String
@@ -148,28 +164,44 @@ type StdsEvent{
       dstintranet:Long
       isstepping:Long
       srcIpObject:SrcIp
-      dstIpObject:DstIp
-      webShellObject:WebShell
 }
 
-type Query {
-    	 getSrcIpByIp(id:ID!):SrcIp
-    	 getDstIpByIp(id:ID!):DstIp
-    	 getWebShellByDomain(id:ID!):WebShell
-    	 getMaterialInfoByUrl(id:ID!):MaterialInfo
-    	 getHostByIp(id:ID!):Host
-    	 stdsEventById(id:ID!):StdsEvent
-    	 getAllSrcIps:[SrcIp]
-    	 getAllDstIps:[DstIp]
-    	 getAllHosts:[Host]
-    	 getAllWebShells:[WebShell]
-    	 getAllMaterialInfos:[MaterialInfo]
-    	 getAllStdsEvents:[StdsEvent]
+type QuerySrcIp{
+  getSrcIpByIp(id:ID!):SrcIp
+  getAllSrcIps(page:GraphQlPageInput):[SrcIp]
+}
+type QueryDstIp{
+  getDstIpByIp(id:ID!):DstIp
+  getAllDstIps(page:GraphQlPageInput):[DstIp]
+}
+type QueryWebShell{
+     getWebShellByDomain(id:ID!):WebShell
+     getAllWebShells(page:GraphQlPageInput):[WebShell]
+}
+type QueryMaterialInfo{
+     getMaterialInfoByUrl(url:String!):MaterialInfo
+     getAllMaterialInfos(page:GraphQlPageInput):[MaterialInfo]
+}
+
+type QueryStdsEvent{
+     stdsEventById(id:ID!):StdsEvent
+     getAllStdsEvents(page:GraphQlPageInput):[StdsEvent]
 }
 
 
+type QueryHost{
+      getHostByIp(ip:String!):Host
+      getAllHosts(page:GraphQlPageInput):[Host]
+}
+type Query{
+     querySrcIp:QuerySrcIp
+     queryDstIp:QueryDstIp
+     queryStdsEvent:QueryStdsEvent
+     queryMaterialInfo:QueryMaterialInfo
+     queryHost:QueryHost
+ }
 schema {
-    query: Query
+    query:Query
 }
 
 scalar DateTime

@@ -23,6 +23,8 @@ public class GraphQlPage {
         if(getSort()!=null&&size>0) {
             if (direction != null && direction.equals("ASC")) {
                 sd = Sort.Direction.ASC;
+            }else {
+                sd = Sort.Direction.DESC;
             }
             return PageRequest.of(page, size, sd, sort);
         }else {

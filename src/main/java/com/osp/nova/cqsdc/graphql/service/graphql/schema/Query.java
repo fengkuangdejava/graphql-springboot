@@ -21,7 +21,5 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     QueryMaterialInfo queryMaterialInfo;
     @Autowired
-    QueryHost queryHost;
-    @Autowired
     QueryStdsEvent queryStdsEvent;
 }

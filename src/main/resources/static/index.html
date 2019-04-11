@@ -17,14 +17,18 @@
         query:null,
         variables:null
     };
-    var query = "{\n" +
-        "        querySrcIp{\n" +
-        "            getSrcIpByIp(id:\"1.160.31.40\"){\n" +
-        "                attackSrcIp,\n" +
-        "                    attackFrequency\n" +
-        "            }\n" +
-        "        }\n" +
-        "    }";
+    //查询所有攻击攻击频率为0.02以上的srcIp并扩展出他们攻击状态为200的目标Ip
+    var query = "{querySrcIp{\n" +
+        "  getAllSrcIpsByCondition(page:null,lcs:[{condition:\"{\\\"key\\\":\\\"attackFrequency\\\",\\\"value\\\":0.02}\",type:\"big\"},{condition:\"{\\\"key\\\":\\\"attackSrcIp\\\",\\\"value\\\":\\\"112\\\"}\",type:\"like\"}]){\n" +
+        "    attackSrcIp\n" +
+        "    attackFrequency\n" +
+        "    srcIpStdsEvents(lcs:[{condition:\"{\\\"key\\\":\\\"status\\\",\\\"value\\\":200}\",type:\"eq\"}]){\n" +
+        "      dstip\n" +
+        "      status\n" +
+        "      rulename\n" +
+        "    }\n" +
+        "  }\n" +
+        "}}";
     graphqlRequst.query=query;
     $.ajax({
         url: "/graphql",

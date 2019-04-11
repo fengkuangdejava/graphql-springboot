@@ -8,8 +8,11 @@ import com.osp.nova.cqsdc.graphql.datasources.mysql.state.pojo.WebShell;
 import com.osp.nova.cqsdc.graphql.datasources.mysql.state.repository.DstIpRepository;
 import com.osp.nova.cqsdc.graphql.datasources.mysql.state.repository.SrcIpRepository;
 import com.osp.nova.cqsdc.graphql.datasources.mysql.state.repository.WebShellRepository;
+import com.osp.nova.cqsdc.graphql.pojo.ConditionPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @program: graphql-module
@@ -18,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @create: 2019-04-04 14:13
  **/
 @Component
-public class StdsEventResolver implements GraphQLResolver<StdsEvent> {
+public class StdsEventResolver extends BaseResolver implements GraphQLResolver<StdsEvent> {
     @Autowired
     SrcIpRepository srcIpRepository;
     @Autowired
@@ -33,9 +36,7 @@ public class StdsEventResolver implements GraphQLResolver<StdsEvent> {
     }
     public WebShell webShellObject(StdsEvent stdsEvent){
         WebShell ws=null;
-        if(stdsEvent.getRulename().toLowerCase().contains("webshell")&&stdsEvent.getDetstatus()==1) {
-            ws =webShellRepository.findById(stdsEvent.getBaseurl()).get();
-        }
+        ws =webShellRepository.findById(stdsEvent.getBaseurl()).get();
         return ws;
     }
 }

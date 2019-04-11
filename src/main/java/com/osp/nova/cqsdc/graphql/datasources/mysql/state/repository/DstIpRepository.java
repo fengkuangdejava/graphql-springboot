@@ -10,4 +10,5 @@ import java.io.Serializable;
 
 @Repository
 public interface DstIpRepository extends JpaRepository<DstIp, String>, JpaSpecificationExecutor<DstIp>, Serializable {
+
 }
